@@ -12,26 +12,30 @@
       </tr>
     </thead>
     <tbody>
-  </tbody>
+    </tbody>
   </table>
 </div>
 <script>
-(function(){
-  $('#slugs_index-data_table').dataTable({
-          sPaginationType: "full_numbers",
-          bProcessing: true,
-          aaSorting: [],
-          bServerSide: true,
-          lengthMenu: [10, 50, 100, 200],
-          ajax:{url: $('#slugs_index-data_table').data('source'), dataSrc:""},
-          pageLength: 50,
-          "language": {
-            "lengthMenu": "Display _MENU_ records per page",
-            "zeroRecords": "Nothing found - sorry",
-            "info": "Showing page _PAGE_ of _PAGES_",
-            "infoEmpty": "",
-            "infoFiltered": ""
-        }
-        })
-})();
+  (function(){
+    $('#slugs_index-data_table').dataTable({
+            sPaginationType: "full_numbers",
+            bProcessing: true,
+            aaSorting: [],
+            bServerSide: true,
+            lengthMenu: [10, 50, 100, 200],
+            ajax:{url: $('#slugs_index-data_table').data('source'), dataSrc:""},
+            pageLength: 50,
+            "language": {
+              "lengthMenu": "Display _MENU_ records per page",
+              "zeroRecords": "Nothing found - sorry",
+              "info": "Showing page _PAGE_ of _PAGES_",
+              "infoEmpty": "",
+              "infoFiltered": ""
+            },
+            'columnDefs': [
+    {   "targets": -1, 
+        "className": "text-center"
+   }],
+          })
+  })();
 </script>
