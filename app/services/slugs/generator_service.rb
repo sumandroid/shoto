@@ -20,7 +20,7 @@ module Slugs
     private
 
     def sanitize_url
-      @sanitized_url = Slugs::UrlSanitizerService.new(long_url).run
+      @sanitized_url = Slugs::UrlSanitizerService.new(long_url).sanitize
     end
 
     def check_for_existing_slug
@@ -32,8 +32,7 @@ module Slugs
     end
 
     def update_slug_maps
-    	created_at = Time.zone.now
-    	Slug.update_slug_map(slug: new_generated_slug, long_url: sanitized_url, created_at: created_at)
+    	Slug.update_slug_map(slug: new_generated_slug, long_url: sanitized_url, created_at: Time.zone.now)
     end
 
 

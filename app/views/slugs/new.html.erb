@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <h2>Shoto Url Shortener</h2>
+    <form action="<%= api_v1_slugs_create_url %>">
+      Provide URL:<br>
+      <textarea type="text" name="long_url" class="form-control" maxlength="500" rows="4", cols="50"></textarea>
+      <br>
+    </form>
+    <input type="submit" value="Submit" id="slug_submit_button">
+    <a href="" name="shortened_url"></a>
+  </body>
+</html>
+<script>
+  $('#slug_submit_button').on('click', function(e){
+  	e.preventDefault();
+  	var form = $('form');
+  	var url = form.find('textarea[name="long_url"]').val().trim();
+  	if (url == '') {
+  		alert('Please provide a URL');
+  		return false;
+  	}else{	
+	  $.ajax({
+      url: form.attr('action'),
+      data: {long_url: url},
+      type: 'post',
+      dataType: 'json',
+      success: function (result) {
+        if (result.status == 200) {
+          alert('URL generated successfully');
+          $('a[name="shortened_url"]').html(result.data['slug']);
+        }else {
+          alert('There is some error');
+          window.location.reload;
+        }
+      }
+    });
+  	}
+  })
+</script>
