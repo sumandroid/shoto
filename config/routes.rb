@@ -9,7 +9,8 @@ Rails.application.routes.draw do
       get '/slugs/:slug' => 'slugs#get_by_slug'
     end
   end
-
-  get '/(:slug)' => 'slugs#index'
   resources :slugs, only: [:index, :new]
+
+  #catch all the short urls
+  match ':slug'                                        => 'slugs#redirect',               :via => [:get],               :constraints => {:invalid_url => /.*/}
 end

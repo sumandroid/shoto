@@ -8,7 +8,8 @@ class Api::V1::SlugsController < ApplicationController
 
   def create
     long_url = get_long_url_from_params
-    render_bad_request and return unless long_url.present?
+    valid_url = Slugs::UrlSanitizerService.new(long_url).validate
+    render_bad_request and return unless valid_url
     slug = Slugs::GeneratorService.new(long_url).run
     render_success(SlugSerializer.slug_as_json(slug)&.merge({slug: slug}))
   end
