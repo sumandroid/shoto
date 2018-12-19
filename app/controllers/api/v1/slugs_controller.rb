@@ -30,11 +30,11 @@ class Api::V1::SlugsController < ApplicationController
   private
 
   def get_long_url_from_params
-  	JSON.parse(params['_json'])['long_url'] || params[:long_url]
+  	(params['_json'].present? ? JSON.parse(params['_json'])&.dig('long_url') : nil) || params[:long_url]
   end
 
   def get_slug_from_params
-  	JSON.parse(params['_json'])['slug'] || params[:slug]
+  	(params['_json'].present? ? JSON.parse(params['_json'])&.dig('slug') : nil) || params[:slug]
   end
 
 end

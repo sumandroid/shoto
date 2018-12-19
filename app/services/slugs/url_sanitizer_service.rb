@@ -12,7 +12,7 @@ module Slugs
     end
 
     def validate
-      !(unsanitized_url =~ /\A#{URI::regexp}\z/).eql? nil #checking the url validity with URI regex, if it is valid it returns zero otherwise nil
+      !(unsanitized_url =~ /^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/ix).eql? nil #checking the url validity with URI regex, if it is valid it returns zero otherwise nil
     end
 
     private

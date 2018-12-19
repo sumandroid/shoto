@@ -8,7 +8,7 @@
       <br>
     </form>
     <input type="submit" value="Submit" id="slug_submit_button">
-    <a href="" name="shortened_url"></a>
+    <a href="" name="shortened_url" target="_blank"></a>
   </body>
 </html>
 <script>
@@ -29,6 +29,7 @@
         if (result.status == 200) {
           alert('URL generated successfully');
           $('a[name="shortened_url"]').html(result.data['slug']);
+          $('a[name="shortened_url"]').attr("href", '/' + '' + result.data['slug']);
         }else {
           alert('There is some error');
           window.location.reload;
