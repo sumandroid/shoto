@@ -1,24 +1,34 @@
 class Slug
 
-	@@slug_to_long_url_map = {}
-	@@long_url_to_slug_map = {}
+  @@slugs = {}
+  @@url_to_slug_map = {}
 
+  class << self
 
-  def find_slug_by_long_url(sanitized_url)
-  	@@long_url_to_slug_map[:sanitized_url]
-  end
+    def find_by(criteria: , value:)
+      case criteria.to_s
+      when 'long_url'
+        @@long_url_to_slug_map[value.to_sym]
+      when 'slug'
+        @@slug_to_long_url_map[value.to_sym]
+      else
+        return nil
+      end
+    end
 
-  def find_long_url_by_slug(slug)
-  	@@slug_to_long_url_map[:slug]
-  end
+    def update_slug_map(slug:, long_url:, created_at:)
+      @@slug_to_long_url_map[slug.to_sym] = { long_url: long_url, created_at: created_at}
+      update_url_to_slug_map(slug: slug, long_url: long_url, created_at: created_at)
+    end
 
-  def self.update_slug_to_long_url_map(slug:, long_url:)
-  	@@slug_to_long_url_map[slug.to_sym] = Slugs::UrlSanitizerService.new(long_url).run
-  end
+    def update_url_to_slug_map(slug:, long_url:, created_at:)
+      @@url_to_slug_map[long_url.to_sym] = {slug: slug}
+    end
 
-  def self.update_long_url_to_slug_map(slug:, long_url:)
-  	sanitized_url = Slugs::UrlSanitizerService.new(long_url).run
-  	@@slug_to_long_url_map[sanitized_url.to_sym] = slug
+    def get_all_slugs_to_url_map
+      @@slugs
+    end
+
   end
 
 end

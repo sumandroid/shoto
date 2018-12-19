@@ -24,7 +24,7 @@ module Slugs
     end
 
     def check_for_existing_slug
-    	@existing_slug = Slug.find_by_long_url(sanitized_url)	
+    	@existing_slug = Slug.find_by(criteria: :long_url, value: sanitized_url)	
     end
 
     def generate_new_slug
@@ -32,8 +32,8 @@ module Slugs
     end
 
     def update_slug_maps
-    	Slug.update_slug_to_long_url_map(slug: new_generated_slug, long_url: long_url)
-    	Slug.update_long_url_to_slug_map(slug: new_generated_slug, long_url: long_url)
+    	created_at = Time.zone.now
+    	Slug.update_slug_map(slug: new_generated_slug, long_url: sanitized_url, created_at: created_at)
     end
 
 
