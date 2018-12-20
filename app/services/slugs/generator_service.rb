@@ -32,7 +32,7 @@ module Slugs
     end
 
     def update_slug_maps
-    	Slug.update_slug_map(slug: new_generated_slug, long_url: sanitized_url, created_at: Time.zone.now)
+    	Slug.update_slug_map(slug: new_generated_slug, long_url: long_url, sanitized_url: sanitized_url, created_at: Time.zone.now)
     end
 
 

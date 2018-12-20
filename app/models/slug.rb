@@ -16,13 +16,13 @@ class Slug
       end
     end
 
-    def update_slug_map(slug:, long_url:, created_at:)
-      @@slugs[slug.to_sym] = { long_url: long_url, created_at: created_at}
-      update_url_to_slug_map(slug: slug, long_url: long_url, created_at: created_at)
+    def update_slug_map(slug:, long_url:, created_at:, sanitized_url:)
+      @@slugs[slug.to_sym] = { long_url: long_url, sanitized_url: sanitized_url, created_at: created_at}
+      update_url_to_slug_map(slug: slug, sanitized_url: sanitized_url)
     end
 
-    def update_url_to_slug_map(slug:, long_url:, created_at:)
-      @@url_to_slug_map[long_url.to_sym] = slug
+    def update_url_to_slug_map(slug:, sanitized_url:)
+      @@url_to_slug_map[sanitized_url.to_sym] = slug
     end
 
     def get_all_slugs_to_url_map
@@ -33,7 +33,7 @@ class Slug
       existing_slug = @@slugs[slug.to_sym]
       if existing_slug.present?
         @@slugs.delete(slug.to_sym)
-        @@url_to_slug_map.delete(existing_slug[:long_url].to_sym)
+        @@url_to_slug_map.delete(existing_slug[:sanitized_url].to_sym)
       end
     end
 
